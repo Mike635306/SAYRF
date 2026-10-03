@@ -1,0 +1,10 @@
+/node_modules
+.env
+.env.*
+server/logs/
+server/uploads/
+server/messages/
+server/chats/
+server/groups/
+server/avatars/
+*.log

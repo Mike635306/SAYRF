@@ -1,0 +1,23 @@
+{
+    "name": "Synapse Chat",
+    "short_name": "Synapse",
+    "start_url": "/",
+    "scope": "/",
+    "display": "standalone",
+    "background_color": "#120808",
+    "theme_color": "#b22222",
+    "icons": [
+       {
+        "src": "./assets/icons-192.png",
+        "type": "image/png",
+        "sizes": "192x192",
+        "purpose": "any"
+       },
+       {
+        "src": "./assets/icons-512.png",
+        "type": "image/png",
+        "sizes": "512x512",
+        "purpose": "maskable"
+       }
+    ]
+}

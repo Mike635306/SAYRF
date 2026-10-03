@@ -1,0 +1,26 @@
+{
+  "name": "synapse",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [
+    "messenger"
+  ],
+  "license": "ISC",
+  "author": "ORTLIB.M",
+  "type": "commonjs",
+  "main": "server/index.js",
+  "scripts": {
+    "test": "node --test server/authStore.test.js",
+    "dev": "nodemon --watch server --ignore server/auth --ignore server/messages --ignore server/chats --ignore server/groups --ignore server/uploads --ignore node_modules --ignore .env server/index.js",
+    "start": "node server/index.js"
+  },
+  "dependencies": {
+    "archiver": "^5.3.1",
+    "crypto-js": "^4.2.0",
+    "express": "^5.1.0",
+    "nodemailer": "^9.0.5",
+    "nodemon": "^3.1.10",
+    "dotenv": "^16.3.1",
+    "socket.io": "^4.8.1"
+  }
+}

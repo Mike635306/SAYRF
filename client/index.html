@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYNAPSE</title>
+    <link rel="stylesheet" href="./style/style.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="./js/index.js?v=2" type="module"></script>
+    <link rel="manifest" href="./manifest.json">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="apple-touch-icon" href="./assets/icons-192.png">
+</head>
+<body>
+   
+    <div id="root">
+         <div id="app">
+            <aside id="left-bar">
+                <div>
+                    <h4>Чаты</h4>
+                </div>
+                <div>
+                    <input placeholder="Search" type="text" id="search">
+                </div>
+                <div class="add-contact-panel">
+                    <input id="add-contact-input" type="text" placeholder="ID или номер телефона" />
+                    <button id="add-contact-btn" class="small-btn" title="Добавить контакт">Добавить контакт</button>
+                </div>
+                <div class="contactsf">
+                    <div id="contacts">
+                        <ul>
+                            <li id="openModalBtn" class="rogc" title="Ваш профиль"><img src="./assets/circle-user-round.svg" width="40px" alt=""><span></span></li>
+                        </ul>
+                        <div id="contact-panel-header">
+                            <span>Контакты</span>
+                            <button id="toggle-contact-panel-btn" class="small-btn" title="Показать контакты"><img src="./assets/plus-circle.svg" width="18px" alt=""></button>
+                        </div>
+                        <div id="all-contacts-panel" class="all-contacts-panel hidden-panel">
+                            <ul id="all-contacts-list"></ul>
+                        </div>
+                        <div id="chat-list-header">
+                            <span>Личные чаты</span>
+                            <button id="create-chat-btn" class="small-btn" title="Новый чат"><img src="./assets/plus-circle.svg" width="18px" alt=""></button>
+                        </div>
+                        <ul id="chat-list"></ul>
+                        <div id="group-list-header">
+                            <span>Группы</span>
+                            <button id="create-group-btn" class="small-btn" title="Новая группа"><img src="./assets/plus-circle.svg" width="18px" alt=""></button>
+                        </div>
+                        <ul id="group-list"></ul>
+                        <button class="settings open-settings-btn" id="open-dialog-btn" aria-label="настройки" ><img src="./assets/cog.png" alt=""></button>
+                    </div>
+                </div>
+            </aside>
+             <div id="audio-msg-notif">
+              <div class="spinner">
+                  <span class="spinner-part-0"></span>
+                  <span class="spinner-part-1"></span>
+                  <span class="spinner-part-2"></span>
+                  <span class="spinner-part-3"></span>
+                  <span class="spinner-part-0"></span>
+                  <span class="spinner-part-1"></span>
+                  <span class="spinner-part-2"></span>
+                  <span class="spinner-part-3"></span>
+              </div>
+                 <img src="./assets/ellipsis-vertical (1).svg" alt="">
+             </div>
+             <div id="plys-msg-notif"></div>
+                <aside class="right-bar-overlay">
+                    <div class="right-bar">
+                        <div>
+                             <h5>Чаты</h5>
+                        </div>
+                        <div>
+                            <input placeholder="Search" type="text" id="search-mobile">
+                        </div>
+                        <div class="add-contact-panel mobile">
+                            <input id="add-contact-input-mobile" type="text" placeholder="ID или номер" />
+                            <button id="add-contact-btn-mobile" class="small-btn" title="Добавить контакт">Добавить</button>
+                        </div>
+                        <ul id="lifg"></ul>
+                        <div id="chat-list-header-mobile">
+                            <span>Личные чаты</span>
+                        </div>
+                        <ul id="chat-list-mobile"></ul>
+                        <div id="group-list-header-mobile">
+                            <span>Группы</span>
+                        </div>
+                        <ul id="group-list-mobile"></ul>
+                        <button class="settings-open-settings-btn" id="open-dialog-btn-mobile" aria-label="настройки"><img src="./assets/cog.png" alt=""></button>
+                    </div>
+                </aside>
+                <!-- Special Actions Button -->
+                <button id="special-actions-btn" class="small-btn" title="Специальные действия" style="position:fixed;right:18px;bottom:18px;z-index:60;">Действия</button>
+             
+            <main id="chat-display">
+                <button id="mobile_menu">
+                </button>
+                <div id="chat-header" style="display:none;padding:8px 12px;border-bottom:1px solid firebrick;margin-bottom:8px;font-family:'Oswald',sans-serif;font-size:1.2rem;color:white;"></div>
+                <div id="chat-msg-dialog">
+                    <div class="receiver">
+             
+        <div id="fileList"></div>
+        </div></div>  
+    
+  <div class="modaa" id="dialog-overlay-backdrop">
+    <div class="modal-contenf">
+        <div id="profile-status">
+            <img id="profile-avatar-img" src="./assets/circle-user-round.svg" alt="">
+            <div id="profile-name"></div>
+            <div id="profile-online-status">
+                <div class="pules"></div>
+                <h5 class="for">Online</h5>
+            </div>
+        </div>
+        <input type="file" id="avatar-file-input" accept="image/*" capture="environment" style="display:none">
+        <input type="file" id="camera-file-input" accept="image/*" capture="user" style="display:none">
+        <button class="contact-avatar" id="avatar"><img src="./assets/circle-user (1).svg" alt="сменить аватарку">Выбрать фото</button>
+        <button class="contact-avatar" id="camera-avatar-btn"><img src="./assets/camera.svg" alt="сделать фото">Сделать снимок</button>
+
+        <div class="profile-editor" style="margin-top:14px;padding:12px;border:1px solid rgba(255,255,255,0.12);border-radius:12px;background:rgba(17,17,17,0.7);display:flex;flex-direction:column;gap:8px;">
+            <label style="display:flex;flex-direction:column;gap:4px;color:#fff;font-size:12px;">
+                Имя
+                <input id="profile-name-input" type="text" placeholder="Введите имя" style="padding:8px;border-radius:8px;border:1px solid firebrick;background:#111;color:#fff;"/>
+            </label>
+            <label style="display:flex;flex-direction:column;gap:4px;color:#fff;font-size:12px;">
+                Статус
+                <select id="profile-status-select" style="padding:8px;border-radius:8px;border:1px solid firebrick;background:#111;color:#fff;">
+                    <option value="online">В сети</option>
+                    <option value="away">Не активен</option>
+                    <option value="offline">Был недавно</option>
+                </select>
+            </label>
+            <label style="display:flex;flex-direction:column;gap:4px;color:#fff;font-size:12px;">
+                Телефон
+                <input id="profile-phone-input" type="tel" placeholder="+7 ..." style="padding:8px;border-radius:8px;border:1px solid firebrick;background:#111;color:#fff;"/>
+            </label>
+            <label style="display:flex;flex-direction:column;gap:4px;color:#fff;font-size:12px;">
+                О себе
+                <textarea id="profile-bio-input" rows="3" placeholder="Напишите о себе" style="resize:none;padding:8px;border-radius:8px;border:1px solid firebrick;background:#111;color:#fff;"></textarea>
+            </label>
+            <button id="profile-save-btn" class="modal-btne">Сохранить профиль</button>
+        </div>
+
+        <div class="phone-sync" style="margin-top:14px;padding:12px;border:1px solid rgba(255,255,255,0.12);border-radius:12px;background:rgba(17,17,17,0.7);display:flex;flex-direction:column;gap:8px;">
+            <div style="color:#fff;font-size:12px;font-weight:600;">Синхронизация с телефона</div>
+            <textarea id="phone-contacts-input" rows="5" placeholder="[{\"name\":\"Иван\",\"phone\":\"+79990000000\"}]" style="resize:none;padding:8px;border-radius:8px;border:1px solid firebrick;background:#111;color:#fff;"></textarea>
+            <button id="phone-sync-btn" class="modal-btne">Импортировать контакты</button>
+        </div>
+
+        <!-- Chat background settings -->
+        <div class="chat-bg-settings" style="margin-top:14px;padding:12px;border:1px solid rgba(255,255,255,0.06);border-radius:12px;background:rgba(15,15,15,0.6);display:flex;flex-direction:column;gap:8px;">
+            <div style="color:#fff;font-size:12px;font-weight:600;">Фон области сообщений</div>
+            <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                <label style="color:#fff;font-size:12px;">Цвет:&nbsp;<input type="color" id="chat-bg-color" value="#000000" style="width:40px;height:28px;border-radius:6px;border:1px solid rgba(255,255,255,0.06);"></label>
+                <label style="color:#fff;font-size:12px;">Изображение:&nbsp;<input type="file" id="chat-bg-file" accept="image/*"></label>
+                <button id="chat-bg-reset" class="modalfer" style="padding:6px 8px;">Сбросить фон</button>
+            </div>
+            <div id="chat-bg-preview" style="height:80px;border-radius:8px;border:1px solid rgba(178,34,34,0.25);background:#000;display:flex;align-items:center;justify-content:center;color:#bbb;font-size:12px;">Превью фона</div>
+        </div>
+
+        <button class="modal-btne" id="delete-all-fixed"><img src="./assets/brush-cleaning.png" alt="Очистить чат">Очистить чат</button>
+        <button class="modalfer" id="close-dialog-btn"><img src="./assets/clover.png" alt="Закрыть">Закрыть</button>
+        <button class="modal-b" id="pwa-install-btn"><img src="./assets/download (1).png" alt="Установить приложение">Установить приложение</button>
+                                                                                                                                 
+    </div>
+    </div>
+
+                <div id="chat-display-message">
+                    
+                    <input id="message-input" placeholder=" your message.." type="text"> 
+                    <button type="button" class="open-modal-btn" id="openBtn" aria-label="Прикрепить файл">
+                        <svg class="open-modal-btn__icon" width="30px" height="30px" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M19 11h-6V5a1 1 0 0 0-2 0v6H5a1 1 0 0 0 0 2h6v6a1 1 0 0 0 2 0v-6h6a1 1 0 0 0 0-2z"/></svg>
+                    </button>
+                    <div class="modal hidden" id="modal">
+                    <div class="modal__overlay" id="modalOverlay"></div>
+                    <div class="modal__content">
+                    <button type="button" class="modal__close" id="closeModalBtn">&times;</button>
+                    <input type="file" id="modalFileInput">
+                    <p id="modalFileLabel" class="modal-file-label"></p>
+                    <div class="modal-upload-progress hidden" id="modalUploadProgressWrapper">
+                        <progress id="modalUploadProgress" max="100" value="0"></progress>
+                        <span id="modalUploadProgressText">0%</span>
+                    </div>
+                    <button type="button" id="modalSendFileBtn" class="modal-send-file-btn" disabled>Отправить файл</button>
+        </div>
+    </div>
+                    <button id="audio-msg"><img src="./assets/mic.svg" alt=""></button>
+                    <button id="send-msg"><img src="./assets/send.svg" alt=""></button>    
+                </div>
+                          
+   
+  <!-- Modal for creating a new private chat -->
+  <div class="modaa" id="create-chat-modal" style="display:none;">
+    <div class="modal-contenf">
+        <h3 style="text-align:center;font-family:'Oswald',sans-serif;">Новый чат</h3>
+        <input type="text" id="create-chat-input" placeholder="Введите имя пользователя" style="width:100%;padding:10px;border:1px solid firebrick;border-radius:8px;background:#111;color:#fff;outline:none;">
+        <div id="create-chat-users-list" style="max-height:200px;overflow-y:auto;display:flex;flex-direction:column;gap:6px;"></div>
+        <button id="create-chat-submit" class="modal-btne" disabled>Создать чат</button>
+        <button id="create-chat-close" class="modalfer">Отмена</button>
+    </div>
+</div>
+
+<!-- Modal for creating a new group -->
+<div class="modaa" id="create-group-modal" style="display:none;">
+    <div class="modal-contenf">
+        <h3 style="text-align:center;font-family:'Oswald',sans-serif;">Новая группа</h3>
+        <input type="text" id="create-group-name" placeholder="Название группы" style="width:100%;padding:10px;border:1px solid firebrick;border-radius:8px;background:#111;color:#fff;outline:none;">
+        <div id="create-group-users-list" style="max-height:200px;overflow-y:auto;display:flex;flex-direction:column;gap:6px;">
+            <p style="color:gray;text-align:center;">Выберите участников:</p>
+        </div>
+        <button id="create-group-submit" class="modal-btne" disabled>Создать группу</button>
+        <button id="create-group-close" class="modalfer">Отмена</button>
+    </div>
+</div>
+    <!-- Special Actions Modal -->
+    <div class="modaa" id="special-actions-modal" style="display:none;">
+        <div class="modal-contenf special-actions-content">
+            <button class="modal__close" id="special-actions-close">&times;</button>
+            <h3 style="text-align:center;font-family:'Oswald',sans-serif;margin-top:6px;">Специальные действия</h3>
+            <div id="special-actions-list" style="display:flex;flex-direction:column;gap:8px;margin-top:8px;">
+                <button class="special-action" data-action="clear-chat">Очистить текущий чат</button>
+                <button class="special-action" data-action="export-messages">Экспортировать сообщения</button>
+                <button class="special-action" data-action="toggle-online">Сменить статус (в сети/оффлайн)</button>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

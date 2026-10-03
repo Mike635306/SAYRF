@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Вход в Synapse</title>
+  <link rel="stylesheet" href="/style/login.css">
+  <script src="./js/login.js"   ></script>
+</head>
+<body>
+
+  <div id="video-bg" aria-hidden="true">
+    <div class="video-bg__frame">
+      <video id="bg-video" class="bg-video" autoplay loop muted playsinline preload="auto">
+        <source src="./assets/login-bg.mp4" type="video/mp4">
+      </video>
+      <div class="video-bg__overlay"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h1>Synapse</h1>
+    <p class="auth-intro" id="authIntro">Введите email и пароль, чтобы открыть свои чаты.</p>
+    <form id="authForm">
+      <label id="fullNameLabel">Имя
+        <input type="text" id="fullName" name="fullName" placeholder="Как к вам обращаться" autocomplete="name">
+      </label>
+      <label>Email
+        <input type="email" id="loginField" name="login" placeholder="name@example.com" autocomplete="username" required>
+      </label>
+      <label>Пароль
+        <input type="password" id="passwordField" name="password" placeholder="Не менее 8 символов" autocomplete="current-password" required>
+      </label>
+      <label id="codeLabel">Код из письма
+        <input type="text" id="codeField" name="code" placeholder="123456" inputmode="numeric" maxlength="6">
+      </label>
+
+      <div class="auth-actions">
+        <button id="modeToggle" class="auth-link" type="button">Создать аккаунт</button>
+        <button id="resetToggle" class="auth-link" type="button">Забыли пароль?</button>
+        <a class="auth-link docs-link" href="/docs.html">Docs</a>
+      </div>
+
+      <button id="saveBtn" type="submit">Войти</button>
+    </form>
+    <div id="authStatus" class="auth-status" aria-live="polite"></div>
+    <div class="note">Аккаунт хранится на сервере. Для нового аккаунта нужно подтвердить email.</div>
+  </div>
+
+
+</body>
+</html>
